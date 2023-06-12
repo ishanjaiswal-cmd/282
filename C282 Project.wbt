@@ -1,0 +1,234 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/OsbWood.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+
+WorldInfo {
+  info [
+    "In this example, the robot turns on a slope."
+    "Its accelerometer sensor is used to switch on the bottommost LED."
+  ]
+  title "Accelerometer"
+  basicTimeStep 8
+  contactProperties [
+    ContactProperties {
+      material2 "body"
+      coulombFriction [
+        0
+      ]
+      softCFM 0.1
+    }
+  ]
+}
+Viewpoint {
+  orientation 0 0 -1 1.5707963267948966
+  position 1.3202483113410546e-17 2.2770697753704345 0
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+}
+PointLight {
+  attenuation 0 0 1
+  intensity 0.6
+  location 0.6 0 0
+}
+DEF SLOPE Solid {
+  translation 0 0 0.15
+  rotation 1 0 0 -1.970795
+  children [
+    Shape {
+      appearance OsbWood {
+        textureTransform TextureTransform {
+          scale 0.5 2
+        }
+      }
+      geometry DEF BOX0 Box {
+        size 0.2 0.02 0.8
+      }
+    }
+  ]
+  name "green box"
+  boundingObject USE BOX0
+}
+Robot {
+  translation -5.043984478973285e-07 0.011146083611194447 0.1562498213616615
+  rotation -0.238761413638967 0.23872349329831885 0.9412778979156843 1.6310796108972638
+  children [
+    Accelerometer {
+    }
+    Transform {
+      translation 0 0 0.0415
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.0820075 0.364731 0.8
+            roughness 1
+            metalness 0
+          }
+          geometry DEF BODY Cylinder {
+            height 0.08
+            radius 0.045
+          }
+        }
+      ]
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 2.8639024640594028e-08
+        axis 0 1 0
+        anchor 0 0 0.025
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+          consumptionFactor 70
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0.045 0.025
+        rotation 0.5773502636780432 -0.5773502636780422 -0.5773502802127919 2.0943949834652518
+        children [
+          DEF WHEEL Transform {
+            rotation 0.577656895078166 0.5771968951617173 -0.5771968951617173 -2.093935
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0 0
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.025
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject USE WHEEL
+        physics DEF PHYSICS_WHEEL Physics {
+          density -1
+          mass 0.05
+        }
+        linearVelocity 1.785040616450751e-13 5.2758903440033545e-06 -2.230596297926738e-06
+        angularVelocity -1.0268281496075147e-08 2.1475008035819023e-08 5.0725885146694334e-08
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 2.866382849531459e-08
+        axis 0 1 0
+        anchor 0 0 0.025
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+          consumptionFactor 70
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 -0.045 0.025
+        rotation 0.5773502636732697 -0.5773502636732687 -0.5773502802223389 2.094394983450931
+        children [
+          USE WHEEL
+        ]
+        boundingObject USE WHEEL
+        physics USE PHYSICS_WHEEL
+        linearVelocity 1.1353509106092648e-12 5.280455763045911e-06 -2.232528842291808e-06
+        angularVelocity -1.026810463683196e-08 2.1474987422879688e-08 5.072588994460672e-08
+      }
+    }
+    DistanceSensor {
+      translation 0.042 0.02 0.063
+      rotation 0 0 -1 -0.499205
+      children [
+        Transform {
+          rotation 0.5776568987953576 0.5771968933016403 -0.5771968933016403 -2.0939
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.975691 0.9814 0.0252
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.004
+                radius 0.008
+              }
+            }
+          ]
+        }
+      ]
+      name "ds1"
+    }
+    DistanceSensor {
+      translation 0.042 -0.02 0.063
+      rotation 0 0 -1 -0.499205
+      children [
+        Transform {
+          rotation 0.60302299345685 0.6025427881820467 0.5227862448191855 -2.0939
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.975691 0.9814 0.0252
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.004
+                radius 0.008
+              }
+            }
+          ]
+        }
+      ]
+      name "ds2"
+    }
+    DEF SMILE Transform {
+      translation 0.036 0 0.025
+      rotation 0 0 1 -0.5007953071795859
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.721569 0.290196 0.290196
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.018
+            radius 0.009
+            subdivision 3
+          }
+        }
+      ]
+    }
+  ]
+  name "MyBot"
+  contactMaterial "body"
+  boundingObject Transform {
+    translation 0 0 0.0415
+    rotation 0 0 1 -1.570796
+    children [
+      USE BODY
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 0.5
+  }
+  controller ""
+  linearVelocity -8.67111535083233e-11 5.278322074739897e-06 -2.231643244627786e-06
+  angularVelocity -1.0268165213432685e-08 2.147498246564022e-08 5.072587770066834e-08
+}
